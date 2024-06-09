@@ -1,0 +1,298 @@
+options {
+  IGNORE_CASE = false;
+  STATIC = false;
+  LOOKAHEAD = 4;
+}
+
+PARSER_BEGIN(Gramatica)
+package Analizador;
+public class Gramatica {
+
+}
+PARSER_END(Gramatica)
+
+/** Lexico */
+SKIP : {
+      " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | <COMENTARIOLINEA: "//" (~["\n"])* "\n" >
+    | <COMENTARIOMULTILINEA: "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" >
+}
+
+TOKEN : {
+      <#DIGITO: ["0"-"9"]>
+    | <#LETRA : ["a"-"z","A"-"Z"] >
+    | <PCOMA: ";"> {System.out.println("PCOMA -> "+image+"\n");}
+    | <PUNTO : "."> {System.out.println("PUNTO -> "+image+"\n");}
+    | <COMA : "," > {System.out.println("COMA -> "+image+"\n");}
+    | <PUNTOS : ":" > {System.out.println("PUNTOS -> "+image+"\n");}
+    | <PAPERTURA: "("> {System.out.println("PAPERTURA -> "+image+"\n");}
+    | <PCIERRE: ")"> {System.out.println("PCIERRE -> "+image+"\n");}
+    | <CORAPERTURA: "["> {System.out.println("CORAPERTURA -> "+image+"\n");}
+    | <CORCIERRE: "]"> {System.out.println("CORCIERRE -> "+image+"\n");}
+    |<LLAVEAPERTURA : "{" > {System.out.println("LLAVEAPERTURA -> "+image+"\n");}
+    |<LLAVECIERRE : "}" > {System.out.println("LLAVECIERRE -> "+image+"\n");}
+    | <GUIONBAJO: "_" > {System.out.println("GUIONBAJO -> "+image+"\n");}
+    | <PRINT : "Print"> {System.out.println("PRINT -> "+image+"\n");}
+    | <PRINTLN: "Println"> {System.out.println("PRINTLN -> "+image+"\n");}
+
+}
+TOKEN : { //OPERADORES ARITMETICOS
+    <SUMA : "+" > {System.out.println("SUMA -> "+image+"\n");}
+    | <RESTA: "-" > {System.out.println("RESTA -> "+image+"\n");}
+    | <MULTIPLICACION : "*" > {System.out.println("MULTIPLICACION -> "+image+"\n");}
+    | <DIV : "/" > {System.out.println("DIV -> "+image+"\n");}
+    | <MOD : "%" > {System.out.println("MOD -> "+image+"\n");}
+    | <INCREMENTO : "++" > {System.out.println("INCREMENTO -> "+image+"\n");}
+    | <DECREMENTO : "--" > {System.out.println("DECREMENTO -> "+image+"\n");}
+}
+TOKEN : { //OPERADORES LOGICOS
+    <AND : "&&" > {System.out.println("AND -> "+image+"\n");}
+    | <OR : "||" > {System.out.println("OR -> "+image+"\n");}
+    | <NOT : "!" > {System.out.println("NOT -> "+image+"\n");}
+}
+TOKEN : { //OPERADORES RELACIONALES
+    <IGUAL : "==" > {System.out.println("IGUAL -> "+image+"\n");}
+    |<MAYOR : ">" > {System.out.println("MAYOR -> "+image+"\n");}
+    |<MENOR : "<" > {System.out.println("MENOR -> "+image+"\n");}
+    |<DIFERENTE : "!=" > {System.out.println("DIFERENTE -> "+image+"\n");}
+}
+TOKEN : { //OPERADORES DE ASIGNACION
+    <ASIGNACION: "=" > {System.out.println("ASIGNACION -> "+image+"\n");}
+    |<ASIGNACIONSUMA: "+=" > {System.out.println("ASIGNACIONSUMA -> "+image+"\n");}
+    |<ASIGNACIONRESTA: "-=" > {System.out.println("ASIGNACTIONRESTA -> "+image+"\n");}
+    | <ASIGNACIONCORTA : ":=" > {System.out.println("ASIGNACIONCORTA -> "+image+"\n");}
+}
+TOKEN : { //OPERADORES BIT A BIT
+    <BITAND : "&" > {System.out.println("BITAND -> "+image+"\n");}
+    | <BITOR: "|" > {System.out.println("BITOR -> "+image+"\n");}
+    | <BITXOR: "^" > {System.out.println("BITXOR -> "+image+"\n");}
+}
+TOKEN : { // PALABRAS RESERVADAS
+    < PACKAGE: "package" > {System.out.println("PACKAGE -> "+image+"\n");}
+    |<FUNCTION : "func" > {System.out.println("FUNCTION -> "+image+"\n");}
+    |<IMPORT : "import" > {System.out.println("IMPORT -> "+image+"\n");}
+    |<STRING : "string"> {System.out.println("STRING -> "+image+"\n");}
+    |<INT : "int" > {System.out.println("INT -> "+image+"\n");}
+
+    |<FLOAT : "float" > {System.out.println("FLOAT -> "+image+"\n");}
+    |<IF: "if" > {System.out.println("IF -> "+image+"\n");}
+    |<ELSE : "else" > {System.out.println("ELSE -> "+image+"\n");}
+    |<VAR : "var" > {System.out.println("VAR -> "+image+"\n");}
+    |<FOR: "for" > {System.out.println("FOR -> "+image+"\n");}
+    | <RANGE: "range" > {System.out.println("RANGE -> "+image+"\n");}
+    | <SWITCH: "switch" > {System.out.println("SWITCH -> "+image+"\n");}
+    | <CASE : "case" > {System.out.println("CASE -> "+image+"\n");}
+    | <DEFECTO: "default" > {System.out.println("DEFAULT -> "+image+"\n");}
+    | <FALLTHROUGH: "fallthrough" > {System.out.println("FALLTHROUGH -> "+image+"\n");}
+    | <RETURN : "return" > {System.out.println("RETURN -> "+image+"\n");}
+
+}
+TOKEN : {
+    <IDENTIFICADOR : (<LETRA> | "_") (<LETRA> | <DIGITO> | "_")* > {System.out.println("IDENTIFICADOR -> "+image+"\n");}
+    |<INT_VALOR : (<DIGITO>)+ > {System.out.println("INT_VALOR -> "+image+"\n");}
+    | <FLOAT_VALOR : (<DIGITO>)+ "." (<DIGITO>)+ > {System.out.println("FLOAT_VALOR -> "+image+"\n");}
+    | <STRING_VALOR : "\"" (~["\""])* "\"" > {System.out.println("STRING_VALOR -> "+image+"\n");}
+}
+/** Fin Lexico */
+void principal():{}
+{
+    <PACKAGE> <IDENTIFICADOR>
+    [imports()]
+    function()
+}
+void imports():{}
+{
+    <IMPORT> (<STRING_VALOR> |<PAPERTURA> (<STRING_VALOR>)+ <PCIERRE>)
+}
+void function():{}
+{
+    <FUNCTION> <IDENTIFICADOR> <PAPERTURA> [(listaIdentificadores() tipoDato())+] <PCIERRE> [tipoDato()] <LLAVEAPERTURA>
+    (sentencias())+
+    (<RETURN> listaValores())?
+    <LLAVECIERRE>
+}
+void sentencias():{}
+{
+    declararVariable()
+    | declaracionIdentificador()
+    | controlIf()
+    | For()
+    | arreglos()
+    | controlSwitch()
+
+}
+void declararVariable():{}
+{
+    <VAR> listaIdentificadores() tipoDato() [<ASIGNACION> listaValores() ]
+}
+void listaIdentificadores():{}
+{
+    <IDENTIFICADOR> (<COMA> <IDENTIFICADOR> )*
+}
+void valor():{}
+{
+    <STRING_VALOR> | <INT_VALOR> | <FLOAT_VALOR> | <IDENTIFICADOR> [<CORAPERTURA> <INT_VALOR> <CORCIERRE>]
+}
+void listaValores():{}
+{
+     opSimple() (<COMA> opSimple())*
+}
+void tipoDato():{}
+{
+    <INT>  | <STRING> | <FLOAT>
+}
+void declaracionIdentificador() : {}
+{
+    LOOKAHEAD( listaIdentificadores() <ASIGNACION>  )
+    asignacionVariableMultiple()
+    |
+    LOOKAHEAD( listaIdentificadores() <ASIGNACIONCORTA> )
+    asignacionVariableCorta()
+    |
+    LOOKAHEAD(<IDENTIFICADOR> <PUNTO> ) imprimir()
+    |
+    LOOKAHEAD(<IDENTIFICADOR> (<ASIGNACIONSUMA> | <ASIGNACIONRESTA>))
+    asignacionVariable()
+
+}
+void asignacionVariable():{}
+{
+    <IDENTIFICADOR> (<ASIGNACIONSUMA> | <ASIGNACIONRESTA> ) opSimple()
+}
+void asignacionVariableMultiple():{}
+{
+    listaIdentificadores() <ASIGNACION>  listaValores()
+}
+void asignacionVariableCorta():{}
+{
+    listaIdentificadores() <ASIGNACIONCORTA> listaValores()
+}
+void opSimple():{}
+{
+    (valor() | opParentesis() )
+    ((opAritmetico()|opBit()) valor() | opParentesis())*
+}
+void opParentesis():{}
+{
+    <PAPERTURA> opSimple() <PCIERRE>
+}
+void opAritmetico():{}
+{
+    <SUMA> | <RESTA> | <MULTIPLICACION> | <MOD> | <INCREMENTO> | <DECREMENTO>
+}
+
+void controlIf():{}
+{
+    <IF> (condicion() | <IDENTIFICADOR>) <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE> [controlElse()]
+}
+void controlElse():{}
+{
+    <ELSE> <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE>
+}
+
+void condicion():{}
+{
+    condicionSimple() (opLogico() (condicionSimple() | <IDENTIFICADOR>))*
+}
+void condicionSimple():{}
+{
+    opSimple() opRelacional() opSimple()
+}
+void opLogico():{}
+{
+    <AND> | <OR> | <NOT>
+}
+void opRelacional():{}
+{
+    <MAYOR> [<ASIGNACION>] | <MENOR> [<ASIGNACION>] | <IGUAL>  | <DIFERENTE>
+}
+void opBit():{}
+{
+    <BITAND> | <BITOR> | <BITXOR>
+}
+void For():{}
+{
+    LOOKAHEAD(<FOR> asignacionVariableCorta())
+    forCompleto()
+    |
+    LOOKAHEAD(<FOR>  condicion())
+    forCondicional()
+    |
+    LOOKAHEAD(<FOR> <LLAVEAPERTURA>)
+    forInfinito()
+    |
+    LOOKAHEAD(<FOR> (<IDENTIFICADOR> | <GUIONBAJO> ))
+    forRange()
+}
+void forCompleto():{}
+{
+    <FOR> asignacionVariableCorta() <PCOMA> condicion() <PCOMA> valor() opAritmetico() <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE>
+}
+void forCondicional():{}
+{
+    <FOR> condicion() <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE>
+}
+void forInfinito():{}
+{
+    <FOR> <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE>
+}
+void forRange():{}
+{
+    <FOR> (<IDENTIFICADOR> | <GUIONBAJO> ) <COMA> <IDENTIFICADOR> <ASIGNACIONCORTA> <RANGE> <IDENTIFICADOR> <LLAVEAPERTURA>
+    (sentencias())+
+    <LLAVECIERRE>
+}
+void imprimir():{}
+{
+    <IDENTIFICADOR> <PUNTO> (<PRINTLN> | <PRINT>)  <PAPERTURA> valor() (<COMA> valor())* <PCIERRE>
+}
+void arreglos():{}
+{
+    LOOKAHEAD(<IDENTIFICADOR> <ASIGNACIONCORTA> <CORAPERTURA>)
+    declararAsignarArreglos()
+    |
+    LOOKAHEAD(<VAR> <IDENTIFICADOR> <CORAPERTURA>)
+    declararArreglos()
+    |
+    LOOKAHEAD(<IDENTIFICADOR> <CORAPERTURA> )
+    asignarArreglo()
+
+}
+void declararArreglos():{}
+{
+    <VAR> <IDENTIFICADOR> <CORAPERTURA> <INT_VALOR> <CORCIERRE> tipoDato()
+}
+void asignarArreglo():{}
+{
+    <IDENTIFICADOR> <CORAPERTURA> <INT_VALOR> <CORCIERRE> <ASIGNACION> opSimple()
+}
+void declararAsignarArreglos():{}
+{
+    <IDENTIFICADOR> <ASIGNACIONCORTA> <CORAPERTURA> <INT_VALOR> <CORCIERRE> tipoDato() <LLAVEAPERTURA> listaValores() <LLAVECIERRE>
+}
+
+void controlSwitch():{}
+{
+    <SWITCH> ([<IDENTIFICADOR>] | valor()) <LLAVEAPERTURA>
+    (controlCase())+
+    [<DEFECTO> <PUNTOS> (sentencias())+]
+    <LLAVECIERRE>
+}
+void controlCase():{}
+{
+    <CASE> (condicion() | valor()) <PUNTOS>
+    (sentencias())+ (<FALLTHROUGH>)?
+}

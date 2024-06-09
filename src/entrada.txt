@@ -1,0 +1,32 @@
+package main
+import (
+    "fmt"
+    "os"
+    )
+func main(){
+    var a int = 10
+    var b int = 20
+    var a,c int = 12,12
+    var d,f int
+    d,f = 12,12
+
+    for {
+        fmt.Println("hola mundo")
+       }
+    for i:= 0; i < 10; i++{
+        fmt.Println("hola")
+    }
+
+    for a != 0 && b != 0 {
+        a -= 1
+        b -=1
+    }
+
+    if a > 0 {
+        fmt.Println("el numero mayor es: b")
+    }else {
+        fmt.Println("el numero mayor es: a")
+    }
+
+}
+
